@@ -1,21 +1,10 @@
-//GROUP A , TEAM 10.
-//AGGELOPOULOS ARXIMHDHS -> 3100007
-//PAGONAS ATHANASIOS     -> 3100249
-//PANAGOPOULOS NIKOLAOS  -> 3100143 
-//PITSIOS STAMATIOS      -> 3100153
-//SXISTOS IWANNHS        -> 3100178
-
-
 import java.util.*;
 
-
-
-/*
+/**
  * This class is used for our symbol table.
  */
 public class SymbolTable
 {
-
 	/*
 	 * This map will contain all the functions with their keys.
 	 * A function key is the function's name together with the number of the function's arguments.

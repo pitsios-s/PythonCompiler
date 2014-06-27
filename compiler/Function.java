@@ -1,17 +1,6 @@
-//GROUP A , TEAM 10.
-//AGGELOPOULOS ARXIMHDHS -> 3100007
-//PAGONAS ATHANASIOS     -> 3100249
-//PANAGOPOULOS NIKOLAOS  -> 3100143 
-//PITSIOS STAMATIOS      -> 3100153
-//SXISTOS IWANNHS        -> 3100178
-
-
-
 import java.util.ArrayList;
 
-
-
-/*
+/**
  * Every instance of this class represents a function that was found in the program.
  */
 public class Function

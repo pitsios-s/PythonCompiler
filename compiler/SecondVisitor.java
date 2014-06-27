@@ -1,22 +1,11 @@
-//GROUP A , TEAM 10.
-//AGGELOPOULOS ARXIMHDHS -> 3100007
-//PAGONAS ATHANASIOS     -> 3100249
-//PANAGOPOULOS NIKOLAOS  -> 3100143 
-//PITSIOS STAMATIOS      -> 3100153
-//SXISTOS IWANNHS        -> 3100178
-
-
-
 import minipython.analysis.*;
 import minipython.node.*;
 
 import java.util.*;
 
 
-
 public class SecondVisitor extends DepthFirstAdapter
-{
-	
+{	
 	/*
 	 * The symbol table.
 	 */

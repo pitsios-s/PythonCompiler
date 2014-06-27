@@ -1,18 +1,8 @@
-//GROUP A , TEAM 10.
-//AGGELOPOULOS ARXIMHDHS -> 3100007
-//PAGONAS ATHANASIOS     -> 3100249
-//PANAGOPOULOS NIKOLAOS  -> 3100143 
-//PITSIOS STAMATIOS      -> 3100153
-//SXISTOS IWANNHS        -> 3100178
-
-
-
-/*
+/**
  * Every instance of this class represents a variable that was found in the program.
  */
 public class Variable
 {
-
 	/*
 	 * The variable's name.
 	 */

@@ -1,24 +1,14 @@
-//GROUP A , TEAM 10.
-//AGGELOPOULOS ARXIMHDHS -> 3100007
-//PAGONAS ATHANASIOS     -> 3100249
-//PANAGOPOULOS NIKOLAOS  -> 3100143 
-//PITSIOS STAMATIOS      -> 3100153
-//SXISTOS IWANNHS        -> 3100178
-
-
-
 import minipython.analysis.*;
 import minipython.node.*;
 import java.util.*;
 
 
-/*
+/**
  * This class parses all the code for first time and adds all the variables and functions to the symbol table.
  * It also finds some errors that are associated with wrong declarations.
  */
 public class FirstVisitor extends DepthFirstAdapter
 {
-	
 	/*
 	 * The symbol table.
 	 */
