@@ -19,7 +19,3 @@ Our job was given the language's grammar in a BNF form, to build a grammar in a 
 * For syntax test that also generates the syntax tree, type : java ParserTest2 ./examples/lexer_syntax/c1.py.
 
 * Finally, for semanctics test, type: java SemanticsTest ./examples/semantics/c1.py. Again, files that start with 'c' are correct, while the ones that start with 'r' should produce errors.
-
-
-#### Note : The project was created using an older version of sablecc. If you try to execute it with the latest version, it won't run.
-
