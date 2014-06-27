@@ -124,9 +124,9 @@ Productions
 	
 	
 	
-	comparison = {rule1} [exp1]:expression comparison_operator [exp2]:expression{-> New comparison.rule1(exp1, exp2)} 
-	            |{rule2} true{-> Null} 
-				|{rule3} false{-> Null};
+	comparison{-> comparison} = {rule1} [exp1]:expression comparison_operator [exp2]:expression{-> New comparison.rule1(exp1, exp2)} 
+	            |{rule2} true {-> New comparison.rule2(true) }
+	            |{rule3} false {-> New comparison.rule3(false) };
 	
 	comparison_operator{-> } =  {rule1} grt{-> } 
 	                      |{rule2} lt{-> } 
@@ -225,7 +225,9 @@ Abstract Syntax Tree
 	
 	
 	
-	comparison = {rule1} [exp1]:expression  [exp2]:expression ;
+	comparison = {rule1} [exp1]:expression  [exp2]:expression 
+	             |{rule2} true
+	             |{rule3} false;
 
 	
 
