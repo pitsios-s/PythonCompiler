@@ -1,7 +1,7 @@
 PythonCompiler
 ==============
 
-A compiler for the language "Mini Python", created using sablecc.
+A compiler for the language "Mini Python", created using sablecc and Java.
 
 This project was developed for the purposes of the course 'Compilers' of cs department, Athens University of Economics and Business, during the Spring semester 2012 - 2013.
 
