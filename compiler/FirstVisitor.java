@@ -423,16 +423,28 @@ public class FirstVisitor extends DepthFirstAdapter
 		ArrayList<Variable> nd_args = new ArrayList<Variable>();
 		
 		//Get all the arguments of the function.
-		LinkedList<AArgArgument> arguments = node.getArgument();
+		LinkedList<AArgArgument> arguments = new LinkedList<AArgArgument>();
+		for(PArgument p_arg : node.getArgument())
+		{
+		   arguments.add((AArgArgument)p_arg);
+		}
 		
 		//For each argument.
 		for(int i = 0; i<arguments.size(); i++)
 		{
 			//Get the assign_value production for the first argument.
-			LinkedList<AAssignValue> assignValue = arguments.get(i).getAssignValue();
+			LinkedList<AAssignValue> assignValue = new LinkedList<AAssignValue>();
+			for(PAssignValue p_assign : arguments.get(i).getAssignValue())
+			{
+			   assignValue.add((AAssignValue)p_assign);
+			}
 			
 			//Get all the rest arguments.
-			LinkedList<AMoreArguments> more_args = arguments.get(i).getMoreArguments();
+			LinkedList<AMoreArguments> more_args = new LinkedList<AMoreArguments>(); 
+			for(PMoreArguments p_args : arguments.get(i).getMoreArguments())
+			{
+			   more_args.add((AMoreArguments)p_args);
+			}
 			
 			//If the first argument has not a default value.
 			if(assignValue.size() == 0)
@@ -497,7 +509,11 @@ public class FirstVisitor extends DepthFirstAdapter
 			for(int j = 0; j<more_args.size(); j++)
 			{
 				//Get the assign_value production for the current argument.
-				LinkedList<AAssignValue> values = more_args.get(j).getAssignValue();
+				LinkedList<AAssignValue> values = new LinkedList<AAssignValue>();
+				for(PAssignValue p_assign : more_args.get(j).getAssignValue())
+				{
+				   values.add((AAssignValue)p_assign);
+				}
 				
 				//If the current argument has not a default value.
 				if(values.size() == 0)
