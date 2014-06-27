@@ -1,0 +1,265 @@
+//AGGELOPOULOS ARXIMHDHS -> 3100007
+//PAGONAS ATHANASIOS     -> 3100249
+//PANAGOPOULOS NIKOLAOS  -> 3100143 
+//PITSIOS STAMATIOS      -> 3100153
+//SXISTOS IWANNHS        -> 3100178
+
+Package minipython;
+
+
+
+
+Helpers
+
+	letter = ['a' .. 'z']|['A' .. 'Z'];
+	digit = ['0' .. '9'];
+	cr = 13;
+	lf = 10;
+	space = 32;
+	all = [0..127];
+	eol = lf | cr | cr lf;
+	hashtag = '#';
+	underscore = '_';
+	single_quotes = ''';
+	double_quotes = '"';
+	fullstop = '.';
+	not_eol = [all - [cr + [lf + [ single_quotes + double_quotes] ] ] ];
+
+	
+
+	
+	
+Tokens
+	
+	tab = 9;
+	ex_mark = '!';
+	plus = '+';
+	minus = '-';
+	mult = '*';
+	assign = '=';
+	equals = '==';
+	grt = '>';
+	gte = '>=';
+	lt = '<';
+	lte = '<=';
+	left_par = '(';
+	right_par = ')';
+	square_right_br = ']';
+	square_left_br = '[';
+	comma = ',';
+	semi = ':';
+	if = 'if';
+	while = 'while';
+	for = 'for';
+	print = 'print';
+	return = 'return';
+	def = 'def';
+	true = 'true';
+	false = 'false';
+	in = 'in';
+	blank = (space | eol);
+	line_comment = hashtag not_eol* eol;
+	integer = digit+;
+	id = (underscore)* letter (letter | digit | underscore)* ;
+	string = double_quotes not_eol* double_quotes | single_quotes not_eol* single_quotes;
+	
+	
+	
+	
+Ignored Tokens	
+
+	blank , line_comment;
+	
+	
+	
+	
+Productions
+
+	goal = {cmds}commands* {-> New goal.cmds([commands]) };
+	
+	commands = {func}function {-> New commands.func(function) }
+	          |{stmt}statement{-> New commands.stmt(statement) };
+	
+	
+	
+	function = {func}def identifier left_par argument? right_par semi statement{-> New function.func(identifier, [argument], statement) };
+	
+	
+	
+	
+	argument = {arg} identifier assign_value? more_arguments*{-> New argument.arg(identifier, [assign_value], [more_arguments])};
+	
+	assign_value= assign value{-> New assign_value(value)};
+	
+	more_arguments = comma identifier assign_value?{-> New more_arguments(identifier, [assign_value])};
+	
+	
+	
+	
+	statement = {rule1}  tab* if comparison semi statement{-> New statement.rule1(comparison, statement)}
+			   |{rule2}  tab* for [id0]:identifier in [id1]:identifier semi statement{-> New statement.rule2(id0, id1, statement)}
+			   |{rule3}  tab* return expression{-> New statement.rule7(expression)}
+			   |{rule4}  tab* print expression more_expressions*{-> New statement.rule3(expression, [more_expressions])}
+			   |{rule5}  tab* identifier assign expression{-> New statement.rule4(identifier, expression)}
+			   |{rule6}  tab* identifier square_left_br [exp1]:expression square_right_br assign [exp2]:expression{-> New statement.rule5(identifier, exp1, exp2)}
+			   |{rule7}  tab* function_call{-> New statement.rule6(function_call)};
+
+	more_expressions = comma expression{-> New more_expressions(expression)};
+	
+	
+	
+	
+	expression =  {rule1} arithmetics{-> arithmetics.expression}
+			     |{rule2} identifier square_left_br expression square_right_br{-> New expression.rule2(identifier, expression)}
+				 |{rule3} square_left_br value more_values* square_right_br{-> New expression.rule3(value, [more_values])};
+				 
+	more_values = comma value{-> New more_values(value)};
+	
+	arithmetics{-> expression } = {rule1} multiplication{-> multiplication.expression} 
+	             |{rule2} multiplication plus expression{-> New expression.add(multiplication.expression , expression)} 
+				 |{rule3} multiplication minus expression{-> New expression.minus(multiplication.expression, expression)};
+				
+	multiplication{-> expression } = {value} element{-> element.expression}
+									 |{multiplication} multiplication mult element{-> New expression.mult(multiplication.expression, element.expression)};
+	
+	element{-> expression} = {rule1} value{-> New expression.value(value)} 
+							|{rule2} identifier{-> New expression.id(identifier)}
+							|{rule3} function_call{-> New expression.func(function_call)}
+							|{rule4} left_par expression right_par{-> New expression.exp(expression)};
+	
+	
+	
+	
+	comparison = {rule1} [exp1]:expression comparison_operator [exp2]:expression{-> New comparison.rule1(exp1, exp2)} 
+	            |{rule2} true{-> Null} 
+				|{rule3} false{-> Null};
+	
+	comparison_operator{-> } =  {rule1} grt{-> } 
+	                      |{rule2} lt{-> } 
+						  |{rule3} gte{-> } 
+						  |{rule4} lte{-> } 
+						  |{rule5} equals{-> };
+	
+	
+	
+	
+	function_call = identifier left_par arg_list? right_par{-> New function_call(identifier, [arg_list])};
+	
+	
+	
+	
+	arg_list = expression more_list_arguments*{-> New arg_list(expression, [more_list_arguments])};
+		
+	more_list_arguments = comma expression{-> New more_list_arguments(expression)};
+	
+	
+	
+	
+	value = {number} number{-> New value.number(number)} 
+	       |{string} string{-> New value.string(string)};
+	
+	
+	
+	
+	number =  {int}    integer{-> New number.int(integer)};
+	
+	
+	
+	
+	identifier = id{-> New identifier(id)};
+	
+	
+	
+	
+	
+Abstract Syntax Tree
+
+	goal = {cmds}commands*;
+	
+	commands = {func}function 
+	          |{stmt}statement;
+	
+	
+	
+	
+	function = {func}identifier argument* statement;
+	
+	
+	
+	
+	argument = {arg} identifier assign_value* more_arguments*;
+	
+	assign_value = value;
+	
+	more_arguments =  identifier assign_value*;
+	
+	
+	
+	
+	statement = {rule1}   comparison  statement
+			   |{rule2}   [id0]:identifier  [id1]:identifier  statement
+			   |{rule3}   [exp1]:expression more_expressions*
+			   |{rule4}   identifier expression
+			   |{rule5}   identifier  [exp1]:expression  [exp2]:expression
+			   |{rule6}   function_call
+			   |{rule7}   expression ;
+
+	   
+	more_expressions = expression;
+	
+	
+	//aritmetics
+	expression =  {rule2} identifier expression 
+				 |{rule3} value more_values* 
+				 |{mult}  [left]:expression [right]:expression 
+	             |{add}   [left]:expression [right]:expression 
+			     |{minus} [left]:expression [right]:expression
+				 |{value} value 
+	             |{id} identifier
+			     |{func} function_call
+		         |{exp} expression ;
+				 
+	more_values = value;
+	
+
+				
+	multiplication = {value} expression
+	                |{multiplication} multiplication value;
+	
+
+	
+	
+	
+	
+	comparison = {rule1} [exp1]:expression  [exp2]:expression ;
+
+	
+
+	
+	
+	
+	
+	function_call = identifier arg_list* ;
+	
+	
+	
+	
+	arg_list = expression more_list_arguments*;
+		
+
+	more_list_arguments = expression;
+	
+	
+	
+	value = {number} number 
+	       |{string} string;
+	
+	
+	
+	
+	number =  {int}    integer;
+	
+	
+	
+	
+	identifier = id;
