@@ -1,11 +1,9 @@
 PythonCompiler
 ==============
 
-A compiler for the language "Mini Python", created using sablecc and Java.
+A compiler for the language "Mini-python"(a language that contains a small subset of python's commands), that was created with the help of SableCC
 
-This project was developed for the purposes of the course 'Compilers' of cs department, Athens University of Economics and Business, during the Spring semester 2012 - 2013.
-
-Our job was given the language's grammar in a BNF form, to build a grammar in a form that the sablecc programm can uderstand and then build some programms for Lexer, Syntax and Semantics check.
+The task was given the language's grammar in a BNF form, to build a grammar in a form that the sablecc programm can understand and then build some programms for Lexer, Syntax and Semantics check.
 
 ## Execution
 * Step 1 : Open a command prompt and execute the grammar by typing ./sablecc MiniPythonGrammar.grammar(on Linux) or sablecc.bat MiniPythonGrammar.grammar(on Windows).
